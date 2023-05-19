@@ -9,6 +9,8 @@ import com.ldsystems.api.service.PessoaService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,8 +31,15 @@ public class PessoaController {
     }
 
     //É respeitada a hierarquia dos pacotes, colocar os controller como pacotes filhos da API!
+    //Retorna lista de Pessoa(HTTP GET)
     @GetMapping
     public List<Pessoa> getListPessoas() {
         return pessoaService.getListPessoas();
+    }
+    
+    //Salva um novo registro de Pessoa (HTTP POST)
+    @PostMapping
+    public void saveNewPessoa(@RequestBody Pessoa pessoa) {
+        pessoaService.saveNewPessoa(pessoa);
     }
 }

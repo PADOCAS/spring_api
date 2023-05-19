@@ -1,7 +1,7 @@
-
 server:
     port: 8080
-    
+    error:
+        include-message: always
 spring:
     datasource:
         url: jdbc:postgresql://localhost:5432/spring_api
@@ -17,3 +17,4 @@ spring:
         show-sql: true            
     main:
         web-application-type: servlet
+            

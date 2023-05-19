@@ -7,6 +7,7 @@ package com.ldsystems.api.service;
 import com.ldsystems.api.model.Pessoa;
 import com.ldsystems.api.repository.PessoaRepository;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,27 @@ public class PessoaService {
         this.pessoaRepository = pessoaRepository;
     }
 
+    /**
+     * Método utilizado no http get - retorna lista de Pessoas cadastradas
+     * @return 
+     */
     public List<Pessoa> getListPessoas() {
         return pessoaRepository.findAll();
+    }
+
+    /**
+     * Método utilizado no http post - salva um novo registro de Pessoa
+     * @param pessoa 
+     */
+    public void saveNewPessoa(Pessoa pessoa) {
+        if (pessoa != null) {
+            Optional<Pessoa> opPessoaByEmail = pessoaRepository.findPessoaByEmail(pessoa.getEmail());
+
+            if (opPessoaByEmail.isPresent()) {
+                throw new IllegalStateException("Já existe esse email cadastrado!\nVerifique!");
+            }
+
+            pessoaRepository.save(pessoa);
+        }
     }
 }
