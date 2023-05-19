@@ -5,12 +5,14 @@
 package com.ldsystems.api.model;
 
 import java.time.LocalDate;
+import java.time.Period;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
@@ -34,16 +36,18 @@ public class Pessoa {
     private String nome;
     private String email;
     private LocalDate dataNascimento;
+
+    @Transient //Não gerar coluna no banco, apenas um atributo para tratamento via sistema (será calculada a idade pela data de nascimento)
     private Integer idade;
 
     public Pessoa() {
     }
 
-    public Pessoa(String nome, String email, LocalDate dataNascimento, Integer idade) {
+    public Pessoa(Long id, String nome, String email, LocalDate dataNascimento) {
+        this.id = id;
         this.nome = nome;
         this.email = email;
         this.dataNascimento = dataNascimento;
-        this.idade = idade;
     }
 
     public Pessoa(String nome, String email, LocalDate dataNascimento) {
@@ -85,7 +89,11 @@ public class Pessoa {
     }
 
     public Integer getIdade() {
-        return idade;
+        if (getDataNascimento() != null) {
+            return Period.between(getDataNascimento(), LocalDate.now()).getYears();
+        }
+
+        return null;
     }
 
     public void setIdade(Integer idade) {

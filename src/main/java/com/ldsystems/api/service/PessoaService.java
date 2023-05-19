@@ -5,10 +5,9 @@
 package com.ldsystems.api.service;
 
 import com.ldsystems.api.model.Pessoa;
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.ArrayList;
+import com.ldsystems.api.repository.PessoaRepository;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,17 +18,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class PessoaService {
 
-    public List<Pessoa> getListPessoas() {
-        List<Pessoa> listPessoa = new ArrayList<>();
-        listPessoa.add(new Pessoa(
-                "André",
-                "andre@bol.com.br",
-                LocalDate.of(1983, Month.MARCH, 12)));
-        listPessoa.add(new Pessoa(
-                "Roberto Andrada",
-                "robgol@gmail.com.br",
-                LocalDate.of(1995, Month.SEPTEMBER, 17)));
+    private final PessoaRepository pessoaRepository;
 
-        return listPessoa;
+    @Autowired
+    public PessoaService(com.ldsystems.api.repository.PessoaRepository pessoaRepository) {
+        this.pessoaRepository = pessoaRepository;
+    }
+
+    public List<Pessoa> getListPessoas() {
+        return pessoaRepository.findAll();
     }
 }
