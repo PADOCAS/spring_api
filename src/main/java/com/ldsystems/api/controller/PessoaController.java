@@ -8,7 +8,9 @@ import com.ldsystems.api.model.Pessoa;
 import com.ldsystems.api.service.PessoaService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,5 +43,11 @@ public class PessoaController {
     @PostMapping
     public void saveNewPessoa(@RequestBody Pessoa pessoa) {
         pessoaService.saveNewPessoa(pessoa);
+    }
+    
+    //Delete para remover uma Pessoa através do ID
+    @DeleteMapping(path = "{PessoaID}")
+    public void removePessoa(@PathVariable("PessoaID") Long id) {
+        pessoaService.removePessoa(id);
     }
 }

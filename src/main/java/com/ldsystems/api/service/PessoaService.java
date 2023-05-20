@@ -28,7 +28,8 @@ public class PessoaService {
 
     /**
      * Método utilizado no http get - retorna lista de Pessoas cadastradas
-     * @return 
+     *
+     * @return
      */
     public List<Pessoa> getListPessoas() {
         return pessoaRepository.findAll();
@@ -36,7 +37,8 @@ public class PessoaService {
 
     /**
      * Método utilizado no http post - salva um novo registro de Pessoa
-     * @param pessoa 
+     *
+     * @param pessoa
      */
     public void saveNewPessoa(Pessoa pessoa) {
         if (pessoa != null) {
@@ -47,6 +49,21 @@ public class PessoaService {
             }
 
             pessoaRepository.save(pessoa);
+        }
+    }
+
+    /**
+     * Método utilizado no http delete - remove uma pessoa através do ID
+     * 
+     * @param id 
+     */
+    public void removePessoa(Long id) {
+        if (id != null) {
+            if (!pessoaRepository.existsById(id)) {
+                throw new IllegalStateException("Pessoa(" + id + ") não existe!\nVerifique!");
+            }
+
+            pessoaRepository.deleteById(id);
         }
     }
 }
