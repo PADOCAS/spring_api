@@ -26,7 +26,7 @@ API com spring boot, funções disponíveis:
 Utiliza 3 camadas e se conecta a um banco de dados postgreSQL.
 <br/>
 <picture>
-  <source srcset="https://github.com/PADOCAS/spring_api/assets/99546913/0b98a61a-8750-474b-98da-cbb0332d843f">
+  <source srcset="https://github.com/PADOCAS/spring_api/assets/99546913/7c535931-1594-4a6e-8692-35295335ff78">
   <img alt="Resumo da API" src="https://github.com/PADOCAS/spring_api/assets/99546913/0b98a61a-8750-474b-98da-cbb0332d843f">
 </picture>
 <br/>
