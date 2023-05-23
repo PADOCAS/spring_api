@@ -14,14 +14,15 @@ import org.springframework.stereotype.Repository;
  *
  * @author bique
  */
-
 @Repository
-public interface PessoaRepository extends JpaRepository<Pessoa, Long>{
-    
+public interface PessoaRepository extends JpaRepository<Pessoa, Long> {
+
     /**
-     * Método para verificar se já existe alguma Pessoa com esse email cadastrada!
+     * Método para verificar se já existe alguma Pessoa com esse email
+     * cadastrada!
+     *
      * @param email
-     * @return 
+     * @return
      */
     @Query("SELECT p FROM Pessoa p WHERE p.email = ?1")
     Optional<Pessoa> findPessoaByEmail(String email);

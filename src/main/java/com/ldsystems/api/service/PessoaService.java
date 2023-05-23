@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,9 +24,27 @@ public class PessoaService {
 
     private final PessoaRepository pessoaRepository;
 
+    private final JdbcTemplate jdbcTemplate;
+
     @Autowired
-    public PessoaService(com.ldsystems.api.repository.PessoaRepository pessoaRepository) {
+    public PessoaService(com.ldsystems.api.repository.PessoaRepository pessoaRepository, org.springframework.jdbc.core.JdbcTemplate jdbcTemplate) {
         this.pessoaRepository = pessoaRepository;
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
+    public List<Pessoa> getListPessoasJdbc() {
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT pes.* FROM Pessoa pes order by pes.id;");
+
+        List<Pessoa> listPessoa = jdbcTemplate.query(sql.toString(), (rs, rownum) -> {
+            return new Pessoa(
+                    rs.getLong("id"),
+                    rs.getString("nome"),
+                    rs.getString("email"),
+                    rs.getObject("data_nascimento") != null ? rs.getDate("data_nascimento").toLocalDate() : null);
+        });
+
+        return listPessoa;
     }
 
     /**
@@ -111,5 +130,15 @@ public class PessoaService {
                 throw new IllegalStateException("Para atualizar uma Pessoa, informe um nome ou email.");
             }
         }
+    }
+
+    public Pessoa getPessoaPorId(Long id) {
+        Pessoa pessoa = null;
+        if (id != null) {
+            pessoa = pessoaRepository.findById(id)
+                    .orElseThrow(() -> new IllegalStateException("Pessoa(" + id + ") não existe."));
+        }
+
+        return pessoa;
     }
 }

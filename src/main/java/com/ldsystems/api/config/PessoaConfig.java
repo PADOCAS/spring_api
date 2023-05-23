@@ -21,22 +21,28 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class PessoaConfig {
 
+    /**
+     * Caso quiser iniciar a aplicação com alguns dados no banco de dados:
+     * 
+     * @param pessoaRepository
+     * @return 
+     */
     @Bean
     CommandLineRunner commandLineRunner(PessoaRepository pessoaRepository) {
         return args -> {
-            Pessoa andre = new Pessoa(
-                    1L,
-                    "André",
-                    "andre@bol.com.br",
-                    LocalDate.of(1983, Month.MARCH, 12));
-
-            Pessoa roberto = new Pessoa(
-                    2L,
-                    "Roberto Andrada",
-                    "robgol@gmail.com.br",
-                    LocalDate.of(1995, Month.SEPTEMBER, 17));
-
-            pessoaRepository.saveAll(List.of(andre, roberto));
+//            Pessoa andre = new Pessoa(
+//                    1L,
+//                    "André",
+//                    "andre@bol.com.br",
+//                    LocalDate.of(1983, Month.MARCH, 12));
+//
+//            Pessoa roberto = new Pessoa(
+//                    2L,
+//                    "Roberto Andrada",
+//                    "robgol@gmail.com.br",
+//                    LocalDate.of(1995, Month.SEPTEMBER, 17));
+//
+//            pessoaRepository.saveAll(List.of(andre, roberto));
         };
     }
 }

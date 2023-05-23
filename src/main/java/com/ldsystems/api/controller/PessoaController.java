@@ -34,11 +34,22 @@ public class PessoaController {
         this.pessoaService = pessoaService;
     }
 
+    @GetMapping(value = "jdbc")
+    public List<Pessoa> getListPessoasJdbc() {
+        return pessoaService.getListPessoasJdbc();
+    }
+
     //É respeitada a hierarquia dos pacotes, colocar os controller como pacotes filhos da API!
-    //Retorna lista de Pessoa(HTTP GET)
+    //HTTP GET > Retorna lista de Pessoa
     @GetMapping
     public List<Pessoa> getListPessoas() {
         return pessoaService.getListPessoas();
+    }
+    
+    ///HTTP GET > Retorna uma Pessoa, caso encontrar o ID pesquisado
+    @GetMapping(path = "{PessoaID}")
+    public Pessoa getPessoaPorId(@PathVariable("PessoaID") Long id) {
+        return pessoaService.getPessoaPorId(id);
     }
 
     //Salva um novo registro de Pessoa (HTTP POST)
